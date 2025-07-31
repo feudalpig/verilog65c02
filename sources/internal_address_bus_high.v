@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 07/27/2025 12:42:32 PM
+// Create Date: 07/31/2025 04:51:39 PM
 // Design Name: 
-// Module Name: register
+// Module Name: internal_address_bus_high
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,20 +20,19 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module register #(parameter WIDTH = 8)(
-    input CE, //clock enable
-    // OE (output enable) excluded as it is implemented
-    // in the data bus
-    input CLK,
-    input [WIDTH-1:0] IN,
+module internal_address_bus_high #(parameter WIDTH = 8)(
+    input [2:0] CNTL,
+    input [WIDTH-1:0] IN0,
+    input [WIDTH-1:0] IN1,
+    input [WIDTH-1:0] IN2,
     output reg [WIDTH-1:0] OUT
     );
     
-    initial
-        OUT = 0;
-    
-    always @(negedge CLK)
-        if (CE)
-            OUT <= IN;
-    
+    always @(CNTL)
+        casex (CNTL)
+            8'b001: OUT = IN0;
+            8'b01x: OUT = IN1;
+            8'b1xx: OUT = IN2;
+            default: OUT = 0;
+        endcase
 endmodule

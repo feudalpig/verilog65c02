@@ -24,28 +24,28 @@ module register_sim #(
     parameter WIDTH = 8
     );
     
-    reg ce;
-    reg clk;
-    reg [WIDTH-1:0] in;
-    wire [WIDTH-1:0] out;
+    reg CE;
+    reg CLK;
+    reg [WIDTH-1:0] IN;
+    wire [WIDTH-1:0] OUT;
     
     integer i;
     
-    register dut(.CE(ce), .CLK(clk), .IN(in), .OUT(out));
+    register dut(.CE(CE), .CLK(CLK), .IN(IN), .OUT(OUT));
     
-    always @(posedge clk)
-        ce = ~ce;
+    always @(posedge CLK)
+        CE = ~CE;
     
     initial
     begin
-        ce = 0;
-        clk = 0;
+        CE = 0;
+        CLK = 0;
         for (i = 0; i < (4*2**WIDTH + 2); i = i + 1)
         begin
-            in = i / 4;
-            #1 clk = ~clk;
+            IN = i / 4;
+            #1 CLK = ~CLK;
             if (i % 4 == 2)
-                if (out != i/4)
+                if (OUT != i/4)
                   $display ("Failure at", $time, i/4);
         end
     end
