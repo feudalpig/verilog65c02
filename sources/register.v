@@ -20,13 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module register(
+module register #(parameter WIDTH = 8)(
     input CE, //clock enable
     // OE (output enable) excluded as it is implemented
     // in the data bus
     input CLK,
-    input [7:0] IN,
-    output reg [7:0] OUT
+    input [WIDTH-1:0] IN,
+    output reg [WIDTH-1:0] OUT
     );
     
     initial

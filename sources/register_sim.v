@@ -20,14 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module register_sim(
-
+module register_sim #(
+    parameter WIDTH = 8
     );
     
     reg ce;
     reg clk;
-    reg [7:0] in;
-    wire [7:0] out;
+    reg [WIDTH-1:0] in;
+    wire [WIDTH-1:0] out;
     
     integer i;
     
@@ -40,16 +40,13 @@ module register_sim(
     begin
         ce = 0;
         clk = 0;
-        for (i = 0; i < 1026; i = i + 1)
+        for (i = 0; i < (4*2**WIDTH + 2); i = i + 1)
         begin
             in = i / 4;
             #1 clk = ~clk;
             if (i % 4 == 2)
-                //$display (out);
-                //$display (i/4);
                 if (out != i/4)
                   $display ("Failure at", $time, i/4);
         end
     end
-    
 endmodule
